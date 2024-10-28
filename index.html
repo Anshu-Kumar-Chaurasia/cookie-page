@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Cookie Example</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc, #f4f4f9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px 40px;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      margin-top: 10px;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="button"] {
+      margin: 15px 10px 0;
+      padding: 12px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background: #6a11cb;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    input[type="button"]:hover {
+      background: #2575fc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    #cookieMessage {
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Set and Get Cookies</h2>
+    <label for="username">Enter Username:</label>
+    <input type="text" id="username" placeholder="Enter your username">
+    <input type="button" value="Set Cookie" onclick="setCookie()">
+    <input type="button" value="Get Cookie" onclick="getCookie()">
+    <p id="cookieMessage"></p>
+  </div>
+
+  <script>
+    function setCookie() {
+      var username = document.getElementById('username').value;
+      if (username) {
+        document.cookie = "username=" + username + ";expires=" + new Date(Date.now() + 60000).toUTCString() + ";path=/";
+        document.getElementById('cookieMessage').innerText = "Cookie set for " + username;
+      } else {
+        document.getElementById('cookieMessage').innerText = "Please enter a username!";
+      }
+    }
+
+    function getCookie() {
+      var name = "username=";
+      var cookieArray = document.cookie.split(';');
+      for (var cookie of cookieArray) {
+        cookie = cookie.trim();
+        if (cookie.indexOf(name) == 0) {
+          document.getElementById('cookieMessage').innerText = "Welcome back, " + cookie.substring(name.length);
+          return;
+        }
+      }
+      document.getElementById('cookieMessage').innerText = "No username cookie found!";
+    }
+  </script>
+</body>
+</html>
